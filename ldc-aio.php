@@ -10,13 +10,13 @@ Network:
 Plugin Name: LDC AIO
 Plugin URI: https://luisdelcid.com/aio/
 Text Domain: ldc-aio
-Version: 0.3.23.1
+Version: 0.3.23.2
 */
 
 // Make sure we don't expose any info if called directly
 defined('ABSPATH') or die('Hi there! I\'m just a plugin, not much I can do when called directly.');
 
-define('LDC_AIO_VERSION', '0.3.23.1');
+define('LDC_AIO_VERSION', '0.3.23.2');
 define('LDC_AIO_FILE', __FILE__);
 define('LDC_AIO_BASENAME', plugin_basename(LDC_AIO_FILE));
 define('LDC_AIO_DIR', plugin_dir_path(LDC_AIO_FILE));
@@ -28,6 +28,12 @@ require_once(LDC_AIO_DIR . 'one/one.php');
 require_once(LDC_AIO_DIR . 'one/functions.php');
 
 foreach(glob(LDC_AIO_DIR . 'all/*', GLOB_ONLYDIR) as $dir){
-    require_once($dir . '/' . basename($dir) . '.php');
-    require_once($dir . '/functions.php');
+    $file = $dir . '/' . basename($dir) . '.php';
+    if(file_exists($file)){
+        require_once($file);
+    }
+    $file = $dir . '/functions.php';
+    if(file_exists($file)){
+        require_once($file);
+    }
 }
