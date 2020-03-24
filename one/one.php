@@ -102,7 +102,7 @@ class LDC_AIO_One {
         $tabs = self::$tabs;
         if(count($tabs) > 1){
             ksort($tabs);
-            $general_id = sanitize_title(__('General'));
+            $general_id = LDC_AIO_SLUG . '-' . sanitize_title(__('General'));
             if(!empty($tabs[$general_id])){
                 $general = $tabs[$general_id];
                 unset($tabs[$general_id]);
