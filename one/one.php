@@ -61,16 +61,10 @@ class LDC_AIO_One {
 
     static public function get_setting($field_id = ''){
         $option_name = str_replace('-', '_', LDC_AIO_SLUG);
-        if(function_exists('rwmb_meta')){
-            return rwmb_meta($field_id, array(
-                'object_type' => 'setting',
-            ), $option_name);
-        } else {
-            $settings = get_option($option_name);
-            if(isset($settings[$field_id])){
-                return $settings[$field_id];
-            }
-        }
+		$settings = get_option($option_name);
+		if(isset($settings[$field_id])){
+			return $settings[$field_id];
+		}
         return false;
 	}
 
