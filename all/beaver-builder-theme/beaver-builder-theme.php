@@ -29,7 +29,7 @@ class LDC_AIO_Beaver_Builder_Theme {
     static public function fl_theme_compile_less_paths($paths){
         foreach($paths as $index => $path){
             if($path == FL_THEME_DIR . '/less/theme.less'){
-                $paths[$index] = FL_CHILD_THEME_DIR . '/less/theme.less';
+                $paths[$index] = LDC_AIO_DIR . 'all/beaver-builder-theme/theme.less';
             }
         }
         return $paths;
@@ -39,4 +39,4 @@ class LDC_AIO_Beaver_Builder_Theme {
 
 }
 
-LDC_AIO_Admin_Search_Meta::init();
+LDC_AIO_Beaver_Builder_Theme::init();
