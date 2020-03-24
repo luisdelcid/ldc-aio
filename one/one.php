@@ -51,7 +51,7 @@ class LDC_AIO_One {
         add_filter('mb_settings_pages', array(__CLASS__, 'mb_settings_pages'));
         add_filter('rwmb_meta_boxes', array(__CLASS__, 'rwmb_meta_boxes'));
         self::add_setting('powered_by', array(
-            'name' => sprintf(__('%1$s is proudly powered by %2$s'), LDC_AIO_NAME, '<a href="https://luisdelcid.com" target="_blank">Luis del Cid</a>'),
+            'name' => sprintf(__('%1$s is proudly powered by %2$s'), LDC_AIO_NAME, '<a href="https://luisdelcid.com" target="_blank">Luis del Cid</a>.'),
             'std' => '<a class="button" href="https://luisdelcid.com/aio/" target="_blank">luisdelcid.com/aio</a>',
             'type' => 'custom_html',
         ));
