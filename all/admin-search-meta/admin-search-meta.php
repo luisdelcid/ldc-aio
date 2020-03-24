@@ -5,7 +5,7 @@ class LDC_AIO_Admin_Search_Meta {
 	// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
     static public function after_setup_theme(){
-        $meta_box_and_tab = 'Admin Search Meta';
+        $meta_box_and_tab = 'Search Admin Metadata';
         LDC_AIO_One::add_setting('search_post_metadata', array(
         	'name' => 'Search Post Metadata?',
         	'on_label' => '<i class="dashicons dashicons-yes"></i>',
