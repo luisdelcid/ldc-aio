@@ -6,7 +6,56 @@ class LDC_AIO_Beaver_Builder_Theme {
 
     static public function add_default_styles(){
         $mods = get_theme_mods();
-        $mods['fl-accent'] = '#428bca';
+        $mods['fl-body-bg-color'] = '#ffffff';
+        $mods['fl-accent'] = '#007bff';
+        $mods['fl-accent-hover'] = '#007bff';
+        $mods['fl-title-text-color'] = '343a40';
+        $mods['fl-title-font-family'] = 'Open Sans';
+        $mods['fl-title-font-weight'] = 500;
+        $mods['fl-h1-font-size'] = 40;
+        $mods['fl-h1-font-size_medium'] = 33;
+        $mods['fl-h1-font-size_mobile'] = 28;
+        $mods['fl-h1-line-height'] = 1.2;
+        $mods['fl-h1-line-height_medium'] = 1.2;
+        $mods['fl-h1-line-height_mobile'] = 1.2;
+        $mods['fl-h2-font-size'] = 32;
+        $mods['fl-h2-font-size_medium'] = 28;
+        $mods['fl-h2-font-size_mobile'] = 24;
+        $mods['fl-h2-line-height'] = 1.2;
+        $mods['fl-h2-line-height_medium'] = 1.2;
+        $mods['fl-h2-line-height_mobile'] = 1.2;
+        $mods['fl-h3-font-size'] = 28;
+        $mods['fl-h3-font-size_medium'] = 25;
+        $mods['fl-h3-font-size_mobile'] = 22;
+        $mods['fl-h3-line-height'] = 1.2;
+        $mods['fl-h3-line-height_medium'] = 1.2;
+        $mods['fl-h3-line-height_mobile'] = 1.2;
+        $mods['fl-h4-font-size'] = 24;
+        $mods['fl-h4-font-size_medium'] = 22;
+        $mods['fl-h4-font-size_mobile'] = 20;
+        $mods['fl-h4-line-height'] = 1.2;
+        $mods['fl-h4-line-height_medium'] = 1.2;
+        $mods['fl-h4-line-height_mobile'] = 1.2;
+        $mods['fl-h5-font-size'] = 20;
+        $mods['fl-h5-font-size_medium'] = 19;
+        $mods['fl-h5-font-size_mobile'] = 16;
+        $mods['fl-h5-line-height'] = 1.2;
+        $mods['fl-h5-line-height_medium'] = 1.2;
+        $mods['fl-h5-line-height_mobile'] = 1.2;
+        $mods['fl-h6-font-size'] = 16;
+        $mods['fl-h6-font-size_medium'] = 16;
+        $mods['fl-h6-font-size_mobile'] = 16;
+        $mods['fl-h6-line-height'] = 1.2;
+        $mods['fl-h6-line-height_medium'] = 1.2;
+        $mods['fl-h6-line-height_mobile'] = 1.2;
+        $mods['fl-body-text-color'] = '#6c757d';
+        $mods['fl-body-font-family'] = 'Open Sans';
+        $mods['fl-body-font-size'] = 16;
+        $mods['fl-body-font-size_medium'] = 16;
+        $mods['fl-body-font-size_mobile'] = 16;
+        $mods['fl-body-line-height'] = 1.5;
+        $mods['fl-body-line-height_medium'] = 1.5;
+        $mods['fl-body-line-height_mobile'] = 1.5;
         update_option('theme_mods_' . get_option('stylesheet'), $mods);
 		return array(
 			'success' => true,
