@@ -56,7 +56,7 @@ class LDC_AIO_Beaver_Builder_Theme {
 		add_action('rest_api_init', array(__CLASS__, 'rest_api_init'));
         $meta_box_and_tab = 'Beaver Builder Theme';
         LDC_AIO_One::add_setting('remove_default_styles', array(
-            'label_description' => 'You must <a class="button" href="' . esc_url(admin_url('options-general.php?page=fl-builder-settings#tools')) . '" target="_blank">clear cache</a> for new settings to take effect.',
+            'label_description' => 'You must <a href="' . admin_url('options-general.php?page=fl-builder-settings#tools') . '" target="_blank">clear cache</a> for new settings to take effect.',
         	'name' => 'Remove default styles for HTML buttons and forms?',
         	'on_label' => '<i class="dashicons dashicons-yes"></i>',
         	'style' => 'square',
