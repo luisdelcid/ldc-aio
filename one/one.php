@@ -82,7 +82,7 @@ class LDC_AIO_One {
         if(is_admin()){
             $current_screen = get_current_screen();
             if($current_screen){
-                if(str_replace('toplevel_page_', '', $screen->id) === LDC_AIO_SLUG or strpos($screen->id, LDC_AIO_SLUG . '_page_') === 0){
+                if(str_replace('toplevel_page_', '', $current_screen->id) === LDC_AIO_SLUG or strpos($current_screen->id, LDC_AIO_SLUG . '_page_') === 0){
                     return true;
                 }
             }
