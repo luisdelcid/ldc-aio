@@ -17,6 +17,7 @@ class LDC_AIO_Beaver_Builder_Theme {
             add_filter('fl_theme_compile_less_paths', array(__CLASS__, 'fl_theme_compile_less_paths'));
         }
 		LDC_AIO_One::add_setting('clear_cache', array(
+            'name' => 'You must clear cache for new settings to take effect.',
             'std' => '<a class="button" href="' . esc_url(admin_url('options-general.php?page=fl-builder-settings#tools')) . '" target="_blank">' . __('Clear Cache', 'fl-builder') . '</a>',
             'type' => 'custom_html',
         ), $meta_box_and_tab);
