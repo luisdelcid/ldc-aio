@@ -46,9 +46,13 @@ class LDC_AIO_Beaver_Builder_Theme {
 		add_action('admin_footer', array(__CLASS__, 'admin_footer'));
 		add_action('rest_api_init', array(__CLASS__, 'rest_api_init'));
         $meta_box_and_tab = 'Beaver Builder Theme';
+        LDC_AIO_One::add_setting('reboot_default_styles', array(
+            'std' => '<button id="reboot_default_styles" class="button">Reboot default styles</button>',
+            'type' => 'custom_html',
+        ), $meta_box_and_tab);
         LDC_AIO_One::add_setting('remove_default_styles', array(
             'label_description' => 'You must <a href="' . admin_url('options-general.php?page=fl-builder-settings#tools') . '" target="_blank">clear cache</a> for new settings to take effect.',
-        	'name' => 'Remove default styles for HTML buttons and forms?',
+        	'name' => 'Remove default styles?',
         	'on_label' => '<i class="dashicons dashicons-yes"></i>',
         	'style' => 'square',
         	'type' => 'switch',
@@ -67,10 +71,6 @@ class LDC_AIO_Beaver_Builder_Theme {
         if($remove_presets){
             add_action('customize_register', array(__CLASS__, 'customize_register'), 20);
         }
-        LDC_AIO_One::add_setting('reboot_default_styles', array(
-            'std' => '<button id="reboot_default_styles" class="button">Reboot default styles</button>',
-            'type' => 'custom_html',
-        ), $meta_box_and_tab);
     }
 
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
