@@ -56,6 +56,7 @@ class LDC_AIO_Beaver_Builder_Theme {
 		add_action('rest_api_init', array(__CLASS__, 'rest_api_init'));
         $meta_box_and_tab = 'Beaver Builder Theme';
         LDC_AIO_One::add_setting('remove_default_styles', array(
+            'label_description' => 'You must <a class="button" href="' . esc_url(admin_url('options-general.php?page=fl-builder-settings#tools')) . '" target="_blank">clear cache</a> for new settings to take effect.',
         	'name' => 'Remove default styles for HTML buttons and forms?',
         	'on_label' => '<i class="dashicons dashicons-yes"></i>',
         	'style' => 'square',
@@ -65,10 +66,6 @@ class LDC_AIO_Beaver_Builder_Theme {
         if($remove_default_styles){
             add_filter('fl_theme_compile_less_paths', array(__CLASS__, 'fl_theme_compile_less_paths'));
         }
-		LDC_AIO_One::add_setting('clear_cache', array(
-            'std' => '<a class="button" href="' . esc_url(admin_url('options-general.php?page=fl-builder-settings#tools')) . '" target="_blank">' . __('Clear Cache', 'fl-builder') . '</a>',
-            'type' => 'custom_html',
-        ), $meta_box_and_tab);
         LDC_AIO_One::add_setting('remove_presets', array(
         	'name' => 'Remove presets?',
         	'on_label' => '<i class="dashicons dashicons-yes"></i>',
