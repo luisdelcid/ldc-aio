@@ -4,6 +4,34 @@ class LDC_AIO_Beaver_Builder_Theme {
 
 	// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+    static public function add_default_styles(){
+        $mods = get_theme_mods();
+        $mods['fl-accent'] = '#428bca';
+        update_option('theme_mods_' . get_option('stylesheet'), $mods);
+    }
+
+    // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+    static public function admin_footer(){ ?>
+    	<script>
+    		jQuery(function($){
+                $('#add_default_styles').on('click', function(){
+                    $.ajax({
+                        beforeSend: function(xhr){
+                            xhr.setRequestHeader('X-WP-Nonce', wpApiSettings.nonce);
+                        },
+                        method: 'GET',
+                        url: wpApiSettings.root + 'ldc-aio/v1/add-default-styles',
+                    }).done(function(response){
+                        console.log(response);
+                    });
+                });
+    		});
+    	</script><?php
+    }
+
+	// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
     static public function after_setup_theme(){
         $meta_box_and_tab = 'Beaver Builder Theme';
         LDC_AIO_One::add_setting('remove_default_styles', array(
@@ -17,7 +45,7 @@ class LDC_AIO_Beaver_Builder_Theme {
             add_filter('fl_theme_compile_less_paths', array(__CLASS__, 'fl_theme_compile_less_paths'));
         }
 		LDC_AIO_One::add_setting('clear_cache', array(
-            'name' => 'You must clear cache for new settings to take effect.',
+            // 'name' => 'You must clear cache for new settings to take effect.',
             'std' => '<a class="button" href="' . esc_url(admin_url('options-general.php?page=fl-builder-settings#tools')) . '" target="_blank">' . __('Clear Cache', 'fl-builder') . '</a>',
             'type' => 'custom_html',
         ), $meta_box_and_tab);
@@ -31,12 +59,22 @@ class LDC_AIO_Beaver_Builder_Theme {
         if($remove_presets){
             add_action('customize_register', array(__CLASS__, 'customize_register'), 20);
         }
+        LDC_AIO_One::add_setting('add_default_styles', array(
+            'std' => '<button id="add_default_styles" class="button">Add default styles</button>',
+            'type' => 'custom_html',
+        ), $meta_box_and_tab);
     }
 
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-    static public function customize_register($wp_customize){
-         $wp_customize->remove_section('fl-presets');
+    static public function rest_api_init(){
+        register_rest_route('ldc-aio/v1', '/add-default-styles', array( // quitar nonce
+            'callback' => array(__CLASS__, 'add_default_styles'),
+            'methods' => 'GET',
+            'permission_callback' => function(){
+                return current_user_can('manage_options');
+            },
+        ));
 	}
 
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
