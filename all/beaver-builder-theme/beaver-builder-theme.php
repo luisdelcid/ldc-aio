@@ -18,7 +18,7 @@ class LDC_AIO_Beaver_Builder_Theme {
         		jQuery(function($){
                     $('#reboot_default_styles').on('click', function(e){
                         e.preventDefault();
-						if(confirm('Are you sure you want to reboot default styles?')){
+						if(confirm('Are you sure?')){
 							$('#reboot_default_styles').text('Wait...');
 							$.ajax({
 								beforeSend: function(xhr){
@@ -51,7 +51,7 @@ class LDC_AIO_Beaver_Builder_Theme {
             'type' => 'custom_html',
         ), $meta_box_and_tab);
         LDC_AIO_One::add_setting('remove_default_styles', array(
-            'label_description' => 'You must <a href="' . admin_url('options-general.php?page=fl-builder-settings#tools') . '" target="_blank">clear cache</a> for new settings to take effect.',
+            'desc' => 'You must <a href="' . admin_url('options-general.php?page=fl-builder-settings#tools') . '" target="_blank">clear cache</a> for new settings to take effect.',
         	'name' => 'Remove default styles?',
         	'on_label' => '<i class="dashicons dashicons-yes"></i>',
         	'style' => 'square',
