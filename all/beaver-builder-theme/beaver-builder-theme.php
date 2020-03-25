@@ -55,7 +55,10 @@ class LDC_AIO_Beaver_Builder_Theme {
         	'name' => 'Remove default styles?',
         	'on_label' => '<i class="dashicons dashicons-yes"></i>',
         	'style' => 'square',
-            'tooltip' => 'HTML Buttons and Forms',
+            'tooltip' => array(
+                'content' => 'HTML Buttons and Forms',
+                'position' => 'right',
+            ),
         	'type' => 'switch',
         ), $meta_box_and_tab);
         $remove_default_styles = LDC_AIO_One::get_setting('remove_default_styles');
@@ -66,7 +69,10 @@ class LDC_AIO_Beaver_Builder_Theme {
         	'name' => 'Remove presets?',
         	'on_label' => '<i class="dashicons dashicons-yes"></i>',
         	'style' => 'square',
-            'tooltip' => 'Customizer',
+            'tooltip' => array(
+                'content' => 'Customizer',
+                'position' => 'right',
+            ),
         	'type' => 'switch',
         ), $meta_box_and_tab);
         $remove_presets = LDC_AIO_One::get_setting('remove_presets');
