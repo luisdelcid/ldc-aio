@@ -16,6 +16,9 @@ class LDC_AIO_Beaver_Builder_Theme {
         if(LDC_AIO_One::is_current_screen()){ ?>
             <script>
         		jQuery(function($){
+                    $('.mb-tooltip').on('click', function(e){
+                        e.preventDefault();
+                    });
                     $('#reboot_default_styles').on('click', function(e){
                         e.preventDefault();
 						if(confirm('Are you sure?')){
