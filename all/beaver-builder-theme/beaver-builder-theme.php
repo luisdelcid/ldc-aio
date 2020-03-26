@@ -54,14 +54,10 @@ class LDC_AIO_Beaver_Builder_Theme {
             'type' => 'custom_html',
         ), $meta_box_and_tab);
         LDC_AIO_One::add_setting('remove_default_styles', array(
-            'label_description' => '<a href="' . admin_url('options-general.php?page=fl-builder-settings#tools') . '" target="_blank">Clear Cache</a>',
+            'label_description' => '<a href="' . admin_url('options-general.php?page=fl-builder-settings#tools') . '" target="_blank">Clear Cache</a> &#8212; <i class="dashicons dashicons-info"></i> <a href="https://developer.wordpress.org/themes/customize-api/" target="_blank">Customizer</a>',
         	'name' => 'Remove default styles?',
         	'on_label' => '<i class="dashicons dashicons-yes"></i>',
         	'style' => 'square',
-            'tooltip' => array(
-                'content' => 'HTML Buttons and Forms',
-                'position' => 'right',
-            ),
         	'type' => 'switch',
         ), $meta_box_and_tab);
         $remove_default_styles = LDC_AIO_One::get_setting('remove_default_styles');
