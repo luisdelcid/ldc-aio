@@ -74,15 +74,16 @@ class LDC_AIO_Beaver_Builder_Theme {
         if($remove_presets){
             add_action('customize_register', array(__CLASS__, 'customize_register'), 20);
         }
-        LDC_AIO_One::add_setting('support_templates_on_menus', array(
+        $meta_box_and_tab = 'Beaver Builder Plugin';
+        LDC_AIO_One::add_setting('expand_templates_into_nav_menus', array(
             'label_description' => '<a href="' . admin_url('nav-menus.php') . '" target="_blank">Menus</a>',
-        	'name' => 'Support templates on menus?',
+        	'name' => 'Expand templates into navigation menus?',
         	'on_label' => '<i class="dashicons dashicons-yes"></i>',
         	'style' => 'square',
         	'type' => 'switch',
         ), $meta_box_and_tab);
-        $support_templates_on_menus = LDC_AIO_One::get_setting('support_templates_on_menus');
-        if($support_templates_on_menus){
+        $expand_templates_into_nav_menus = LDC_AIO_One::get_setting('expand_templates_into_nav_menus');
+        if($expand_templates_into_nav_menus){
             add_filter('walker_nav_menu_start_el', array(__CLASS__, 'walker_nav_menu_start_el'), 10, 4);
         }
     }
