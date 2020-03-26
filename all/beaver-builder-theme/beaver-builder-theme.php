@@ -50,7 +50,9 @@ class LDC_AIO_Beaver_Builder_Theme {
 		add_action('rest_api_init', array(__CLASS__, 'rest_api_init'));
         $meta_box_and_tab = 'Beaver Builder Theme';
         LDC_AIO_One::add_setting('reboot_default_styles', array(
-            'std' => '<button id="reboot_default_styles" class="button">Reboot default styles</button>',
+            'label_description' => '<a href="' . admin_url('customize.php') . '" target="_blank">Customizer</a>',
+        	'name' => 'Reboot default styles?',
+            'std' => '<button id="reboot_default_styles" class="button">Reboot</button>',
             'type' => 'custom_html',
         ), $meta_box_and_tab);
         LDC_AIO_One::add_setting('remove_default_styles', array(
