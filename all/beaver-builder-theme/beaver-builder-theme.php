@@ -83,11 +83,12 @@ class LDC_AIO_Beaver_Builder_Theme {
             add_action('customize_register', array(__CLASS__, 'customize_register'), 20);
         }
         LDC_AIO_One::add_setting('support_templates_on_menus', array(
+            'label_description' => 'You must show the Templates module from the Screen Options of the <a href="' . admin_url('nav-menus.php') . '" target="_blank">Menus</a> admin area.',
         	'name' => 'Support templates on menus?',
         	'on_label' => '<i class="dashicons dashicons-yes"></i>',
         	'style' => 'square',
             'tooltip' => array(
-                'content' => 'Mega menus',
+                'content' => 'Turn standard drop-down menus into mega menus.',
                 'position' => 'right',
             ),
         	'type' => 'switch',
