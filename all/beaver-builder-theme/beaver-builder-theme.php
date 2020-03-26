@@ -32,7 +32,7 @@ class LDC_AIO_Beaver_Builder_Theme {
 							}).done(function(response){
 								$('#reboot_default_styles').text('Done.');
 								setTimeout(function(){
-									$('#reboot_default_styles').text('Reboot default styles');
+									$('#reboot_default_styles').text('Reboot');
 								}, 1000);
 							});
 						}
@@ -50,13 +50,12 @@ class LDC_AIO_Beaver_Builder_Theme {
 		add_action('rest_api_init', array(__CLASS__, 'rest_api_init'));
         $meta_box_and_tab = 'Beaver Builder Theme';
         LDC_AIO_One::add_setting('reboot_default_styles', array(
-            'label_description' => '<a href="' . admin_url('customize.php') . '" target="_blank">Customizer</a>',
         	'name' => 'Reboot default styles?',
             'std' => '<button id="reboot_default_styles" class="button">Reboot</button>',
             'type' => 'custom_html',
         ), $meta_box_and_tab);
         LDC_AIO_One::add_setting('remove_default_styles', array(
-            'label_description' => '<a href="' . admin_url('options-general.php?page=fl-builder-settings#tools') . '" target="_blank">Clear Cache</a>',
+            'label_description' => 'You must <a href="' . admin_url('options-general.php?page=fl-builder-settings#tools') . '" target="_blank">clear cache</a> for new settings to take effect.',
         	'name' => 'Remove default styles?',
         	'on_label' => '<i class="dashicons dashicons-yes"></i>',
         	'style' => 'square',
@@ -88,7 +87,6 @@ class LDC_AIO_Beaver_Builder_Theme {
             add_filter('fl_inline_editing_enabled', '__return_false');
         }
         LDC_AIO_One::add_setting('expand_templates_into_nav_menus', array(
-            'label_description' => '<a href="' . admin_url('nav-menus.php') . '" target="_blank">Menus</a>',
         	'name' => 'Expand templates into navigation menus?',
         	'on_label' => '<i class="dashicons dashicons-yes"></i>',
         	'style' => 'square',
