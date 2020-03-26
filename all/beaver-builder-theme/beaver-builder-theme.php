@@ -104,7 +104,10 @@ class LDC_AIO_Beaver_Builder_Theme {
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
     static public function init(){
-        add_action('after_setup_theme', array(__CLASS__, 'after_setup_theme'));
+        $current_theme = wp_get_theme();
+		if($current_theme->get('Name') == 'Beaver Builder Theme' or $current_theme->get('Template') == 'bb-theme'){
+            add_action('after_setup_theme', array(__CLASS__, 'after_setup_theme'));
+        }
 	}
 
 	// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
