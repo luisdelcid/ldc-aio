@@ -54,7 +54,7 @@ class LDC_AIO_Beaver_Builder_Theme {
             'type' => 'custom_html',
         ), $meta_box_and_tab);
         LDC_AIO_One::add_setting('remove_default_styles', array(
-            'desc' => 'You must <a href="' . admin_url('options-general.php?page=fl-builder-settings#tools') . '" target="_blank">clear cache</a> for new settings to take effect.',
+            'label_description' => 'You must <a href="' . admin_url('options-general.php?page=fl-builder-settings#tools') . '" target="_blank">clear cache</a> for new settings to take effect.',
         	'name' => 'Remove default styles?',
         	'on_label' => '<i class="dashicons dashicons-yes"></i>',
         	'style' => 'square',
@@ -81,6 +81,20 @@ class LDC_AIO_Beaver_Builder_Theme {
         $remove_presets = LDC_AIO_One::get_setting('remove_presets');
         if($remove_presets){
             add_action('customize_register', array(__CLASS__, 'customize_register'), 20);
+        }
+        LDC_AIO_One::add_setting('support_templates_on_menus', array(
+        	'name' => 'Support templates on menus?',
+        	'on_label' => '<i class="dashicons dashicons-yes"></i>',
+        	'style' => 'square',
+            'tooltip' => array(
+                'content' => 'Mega menus',
+                'position' => 'right',
+            ),
+        	'type' => 'switch',
+        ), $meta_box_and_tab);
+        $support_templates_on_menus = LDC_AIO_One::get_setting('support_templates_on_menus');
+        if($support_templates_on_menus){
+            add_filter('walker_nav_menu_start_el', array(__CLASS__, 'walker_nav_menu_start_el'), 10, 4);
         }
     }
 
@@ -182,6 +196,17 @@ class LDC_AIO_Beaver_Builder_Theme {
                 return current_user_can('manage_options');
             },
         ));
+	}
+
+    // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+    static public function walker_nav_menu_start_el($item_output, $item, $depth, $args){
+        if($item->object == 'fl-builder-template'){
+            $item_output = $args->before;
+            $item_output .= do_shortcode('[fl_builder_insert_layout id="' . $item->object_id . '"]');
+            $item_output .= $args->after;
+        }
+        return $item_output;
 	}
 
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
