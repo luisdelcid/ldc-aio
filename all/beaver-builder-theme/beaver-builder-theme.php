@@ -88,7 +88,7 @@ class LDC_AIO_Beaver_Builder_Theme {
         	'on_label' => '<i class="dashicons dashicons-yes"></i>',
         	'style' => 'square',
             'tooltip' => array(
-                'content' => 'Turn standard drop-down menus into mega menus.',
+                'content' => 'Mega Menu',
                 'position' => 'right',
             ),
         	'type' => 'switch',
