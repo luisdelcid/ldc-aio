@@ -54,7 +54,7 @@ class LDC_AIO_Beaver_Builder_Theme {
             'type' => 'custom_html',
         ), $meta_box_and_tab);
         LDC_AIO_One::add_setting('remove_default_styles', array(
-            'label_description' => '<a href="' . admin_url('options-general.php?page=fl-builder-settings#tools') . '" target="_blank">Clear Cache</a> &#8212; <a href="https://kb.wpbeaverbuilder.com/article/153-customizer-settings-the-general-tab" target="_blank">Customizer settings: The General tab</a>',
+            'label_description' => '<a href="' . admin_url('options-general.php?page=fl-builder-settings#tools') . '" target="_blank">Clear Cache</a>',
         	'name' => 'Remove default styles?',
         	'on_label' => '<i class="dashicons dashicons-yes"></i>',
         	'style' => 'square',
@@ -65,7 +65,6 @@ class LDC_AIO_Beaver_Builder_Theme {
             add_filter('fl_theme_compile_less_paths', array(__CLASS__, 'fl_theme_compile_less_paths'));
         }
         LDC_AIO_One::add_setting('remove_presets', array(
-            'label_description' => '<a href="https://kb.wpbeaverbuilder.com/article/286-peset-tips" target="_blank">Presets</a> &#8212; <a href="https://developer.wordpress.org/themes/customize-api/" target="_blank">Customizer</a>',
         	'name' => 'Remove presets?',
         	'on_label' => '<i class="dashicons dashicons-yes"></i>',
         	'style' => 'square',
@@ -76,14 +75,10 @@ class LDC_AIO_Beaver_Builder_Theme {
             add_action('customize_register', array(__CLASS__, 'customize_register'), 20);
         }
         LDC_AIO_One::add_setting('support_templates_on_menus', array(
-            'label_description' => '<a href="' . admin_url('nav-menus.php') . '" target="_blank">Menus</a> &#8212; <a href="https://make.wordpress.org/support/user-manual/getting-to-know-wordpress/screen-options/" target="_blank">Screen Options</a> &#8212; <a href="https://kb.wpbeaverbuilder.com/article/99-layout-templates-overview" target="_blank">Templates</a>',
+            'label_description' => '<a href="' . admin_url('nav-menus.php') . '" target="_blank">Menus</a>',
         	'name' => 'Support templates on menus?',
         	'on_label' => '<i class="dashicons dashicons-yes"></i>',
         	'style' => 'square',
-            'tooltip' => array(
-                'content' => 'Mega Menu',
-                'position' => 'right',
-            ),
         	'type' => 'switch',
         ), $meta_box_and_tab);
         $support_templates_on_menus = LDC_AIO_One::get_setting('support_templates_on_menus');
