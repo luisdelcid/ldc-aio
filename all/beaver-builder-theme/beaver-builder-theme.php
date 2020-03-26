@@ -69,6 +69,7 @@ class LDC_AIO_Beaver_Builder_Theme {
             add_filter('fl_theme_compile_less_paths', array(__CLASS__, 'fl_theme_compile_less_paths'));
         }
         LDC_AIO_One::add_setting('remove_presets', array(
+            'label_description' => '<i class="dashicons dashicons-info"></i> <a href="https://kb.wpbeaverbuilder.com/article/286-peset-tips" target="_blank">Presets</a>',
         	'name' => 'Remove presets?',
         	'on_label' => '<i class="dashicons dashicons-yes"></i>',
         	'style' => 'square',
@@ -83,7 +84,7 @@ class LDC_AIO_Beaver_Builder_Theme {
             add_action('customize_register', array(__CLASS__, 'customize_register'), 20);
         }
         LDC_AIO_One::add_setting('support_templates_on_menus', array(
-            'label_description' => '<a href="' . admin_url('nav-menus.php') . '" target="_blank">Menus</a> &#8212; <a href="https://make.wordpress.org/support/user-manual/getting-to-know-wordpress/screen-options/" target="_blank">Screen Options</a> &#8212; <a href="https://kb.wpbeaverbuilder.com/article/99-layout-templates-overview" target="_blank">Templates</a>',
+            'label_description' => '<a href="' . admin_url('nav-menus.php') . '" target="_blank">Menus</a> &#8212; <i class="dashicons dashicons-info"></i> <a href="https://make.wordpress.org/support/user-manual/getting-to-know-wordpress/screen-options/" target="_blank">Screen Options</a> &#8212; <i class="dashicons dashicons-info"></i> <a href="https://kb.wpbeaverbuilder.com/article/99-layout-templates-overview" target="_blank">Templates</a>',
         	'name' => 'Support templates on menus?',
         	'on_label' => '<i class="dashicons dashicons-yes"></i>',
         	'style' => 'square',
