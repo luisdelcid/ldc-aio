@@ -75,6 +75,16 @@ class LDC_AIO_Beaver_Builder_Theme {
             add_action('customize_register', array(__CLASS__, 'customize_register'), 20);
         }
         $meta_box_and_tab = 'Beaver Builder Plugin';
+        LDC_AIO_One::add_setting('disable_inline_editing', array(
+        	'name' => 'Disable inline editing?',
+        	'on_label' => '<i class="dashicons dashicons-yes"></i>',
+        	'style' => 'square',
+        	'type' => 'switch',
+        ), $meta_box_and_tab);
+        $disable_inline_editing = LDC_AIO_One::get_setting('disable_inline_editing');
+        if($disable_inline_editing){
+            add_filter('fl_inline_editing_enabled', '__return_false');
+        }
         LDC_AIO_One::add_setting('expand_templates_into_nav_menus', array(
             'label_description' => '<a href="' . admin_url('nav-menus.php') . '" target="_blank">Menus</a>',
         	'name' => 'Expand templates into navigation menus?',
