@@ -97,17 +97,20 @@ class LDC_AIO_Beaver_Builder_Theme {
             add_filter('walker_nav_menu_start_el', array(__CLASS__, 'walker_nav_menu_start_el'), 10, 4);
         }
         LDC_AIO_One::add_setting('templates_width_small', array(
-        	'name' => 'Width small:',
+            'columns' => 4,
+        	'name' => 'Small width:',
         	'type' => 'number',
             'visible' => array('expand_templates_into_nav_menus', true),
         ), $meta_box_and_tab);
         LDC_AIO_One::add_setting('templates_width_medium', array(
-        	'name' => 'Width medium:',
+            'columns' => 4,
+        	'name' => 'Medium width (min-width: 768px):',
         	'type' => 'number',
             'visible' => array('expand_templates_into_nav_menus', true),
         ), $meta_box_and_tab);
         LDC_AIO_One::add_setting('templates_width_large', array(
-        	'name' => 'Width large:',
+            'columns' => 4,
+        	'name' => 'Large width (min-width: 992px):',
         	'type' => 'number',
             'visible' => array('expand_templates_into_nav_menus', true),
         ), $meta_box_and_tab);
