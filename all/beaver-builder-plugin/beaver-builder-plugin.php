@@ -15,7 +15,11 @@ class LDC_AIO_Beaver_Builder_Plugin {
             'f8f9fa', // light
             '343a40', // dark
         );
-        $colors = array_merge($b4_colors, $colors);
+        if($colors){
+            $colors = array_merge($b4_colors, $colors);
+        } else {
+            $colors = $b4_colors;
+        }
         return $colors;
     }
 
