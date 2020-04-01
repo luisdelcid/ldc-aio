@@ -112,7 +112,11 @@ if(!function_exists('ldc_zoom_request')){
 					if($parameters){
 						global $wpdb;
 			            $args = array_splice($arguments, 0, $parameters);
+						$args = array_map('urlencode', $args);
+						$args = array_map('urlencode', $args);
 			            $endpoint = $wpdb->prepare($endpoint, $args);
+						$endpoint = $wpdb->remove_placeholder_escape($endpoint);
+						$endpoint = str_replace("'", '', $endpoint);
 			            $offset = count($arguments) - $parameters;
 			            $arguments = array_splice($arguments, -$offset);
 			        }
