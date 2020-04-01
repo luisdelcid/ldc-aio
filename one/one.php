@@ -44,18 +44,6 @@ class LDC_AIO_One {
         }
 	}
 
-	// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-    static public function after_setup_theme(){
-        add_action('admin_notices', array(__CLASS__, 'admin_notices'));
-        add_filter('mb_settings_pages', array(__CLASS__, 'mb_settings_pages'));
-        add_filter('rwmb_meta_boxes', array(__CLASS__, 'rwmb_meta_boxes'));
-		self::add_setting('powered_by', array(
-            'std' => '<p><img style="max-width: 150px; height: auto;" src="data:image/svg+xml;base64,PHN2ZyBpZD0iTGF5ZXJfMSIgZGF0YS1uYW1lPSJMYXllciAxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA3OTQuMjIgNDQ4LjExIj48cGF0aCBkPSJNOTA3LjE3LDU0NC4xMUE5Niw5NiwwLDEsMSw5NzQuOCwzODBsNDUuMjYtNDUuMjZhMTYwLDE2MCwwLDEsMCwuNSwyMjYuMjdMOTc1LjMsNTE1Ljc0QTk1LjczLDk1LjczLDAsMCwxLDkwNy4xNyw1NDQuMTFaIiB0cmFuc2Zvcm09InRyYW5zbGF0ZSgtMjM1IC0xNjApIi8+PHBvbHlnb24gcG9pbnRzPSI3NzguNDkgNDE3LjcyIDc3OC40OCA0MTcuNzMgNzc4LjQ5IDQxNy43MiA3NzguNDkgNDE3LjcyIi8+PGNpcmNsZSBjeD0iNzYyLjIyIiBjeT0iMTk3LjgxIiByPSIzMiIvPjxjaXJjbGUgY3g9Ijc2Mi4yMiIgY3k9IjM3OC44MyIgcj0iMzIiLz48cmVjdCB3aWR0aD0iNjQiIGhlaWdodD0iNDQ4IiByeD0iMzIiLz48cGF0aCBkPSJNNTIzLDI4Ny43NWExNjAsMTYwLDAsMSwwLDE2MCwxNjBBMTYwLDE2MCwwLDAsMCw1MjMsMjg3Ljc1Wm0wLDI1NmE5Niw5NiwwLDEsMSw5Ni05NkE5Niw5NiwwLDAsMSw1MjMsNTQzLjc1WiIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoLTIzNSAtMTYwKSIvPjxyZWN0IHg9IjM4NCIgd2lkdGg9IjY0IiBoZWlnaHQ9IjQ0OCIgcng9IjMyIi8+PC9zdmc+" alt="' . LDC_AIO_NAME . '"></p><p>' . LDC_AIO_NAME . ' is proudly powered by <a href="https://luisdelcid.com" target="_blank">Luis del Cid</a>.</p>',
-            'type' => 'custom_html',
-        ));
-    }
-
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
     static public function get_setting($field_id = ''){
@@ -72,7 +60,13 @@ class LDC_AIO_One {
     static public function init(){
 		require_once(LDC_AIO_DIR . 'in/plugin-update-checker-4.9/plugin-update-checker.php');
 		Puc_v4_Factory::buildUpdateChecker('https://github.com/luisdelcid/' . LDC_AIO_SLUG, LDC_AIO_FILE, LDC_AIO_SLUG);
-        add_action('after_setup_theme', array(__CLASS__, 'after_setup_theme'));
+		add_action('admin_notices', array(__CLASS__, 'admin_notices'));
+        add_filter('mb_settings_pages', array(__CLASS__, 'mb_settings_pages'));
+        add_filter('rwmb_meta_boxes', array(__CLASS__, 'rwmb_meta_boxes'));
+		self::add_setting('powered_by', array(
+            'std' => '<p><img style="max-width: 150px; height: auto;" src="data:image/svg+xml;base64,PHN2ZyBpZD0iTGF5ZXJfMSIgZGF0YS1uYW1lPSJMYXllciAxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA3OTQuMjIgNDQ4LjExIj48cGF0aCBkPSJNOTA3LjE3LDU0NC4xMUE5Niw5NiwwLDEsMSw5NzQuOCwzODBsNDUuMjYtNDUuMjZhMTYwLDE2MCwwLDEsMCwuNSwyMjYuMjdMOTc1LjMsNTE1Ljc0QTk1LjczLDk1LjczLDAsMCwxLDkwNy4xNyw1NDQuMTFaIiB0cmFuc2Zvcm09InRyYW5zbGF0ZSgtMjM1IC0xNjApIi8+PHBvbHlnb24gcG9pbnRzPSI3NzguNDkgNDE3LjcyIDc3OC40OCA0MTcuNzMgNzc4LjQ5IDQxNy43MiA3NzguNDkgNDE3LjcyIi8+PGNpcmNsZSBjeD0iNzYyLjIyIiBjeT0iMTk3LjgxIiByPSIzMiIvPjxjaXJjbGUgY3g9Ijc2Mi4yMiIgY3k9IjM3OC44MyIgcj0iMzIiLz48cmVjdCB3aWR0aD0iNjQiIGhlaWdodD0iNDQ4IiByeD0iMzIiLz48cGF0aCBkPSJNNTIzLDI4Ny43NWExNjAsMTYwLDAsMSwwLDE2MCwxNjBBMTYwLDE2MCwwLDAsMCw1MjMsMjg3Ljc1Wm0wLDI1NmE5Niw5NiwwLDEsMSw5Ni05NkE5Niw5NiwwLDAsMSw1MjMsNTQzLjc1WiIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoLTIzNSAtMTYwKSIvPjxyZWN0IHg9IjM4NCIgd2lkdGg9IjY0IiBoZWlnaHQ9IjQ0OCIgcng9IjMyIi8+PC9zdmc+" alt="' . LDC_AIO_NAME . '"></p><p>' . LDC_AIO_NAME . ' is proudly powered by <a href="https://luisdelcid.com" target="_blank">Luis del Cid</a>.</p>',
+            'type' => 'custom_html',
+        ));
 	}
 
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -95,7 +89,7 @@ class LDC_AIO_One {
         $tabs = self::$tabs;
         if(count($tabs) > 1){
             ksort($tabs);
-            $general_id = LDC_AIO_SLUG . '-' . sanitize_title(__('General'));
+            $general_id = LDC_AIO_SLUG . '-' . sanitize_title('General');
             if(!empty($tabs[$general_id])){
                 $general = $tabs[$general_id];
                 unset($tabs[$general_id]);
@@ -110,9 +104,9 @@ class LDC_AIO_One {
             'id' => LDC_AIO_SLUG,
             'menu_title' => LDC_AIO_NAME,
             'option_name' => str_replace('-', '_', LDC_AIO_SLUG),
-            'page_title' => __('General Settings'),
+            'page_title' => 'General Settings',
             'style' => 'no-boxes',
-            'submenu_title' => __('General'),
+            'submenu_title' => 'General',
             'tabs' => $tabs,
             'tab_style' => 'left',
         );
@@ -141,7 +135,7 @@ class LDC_AIO_One {
 
     static private function maybe_add_meta_box($meta_box = ''){
         if(!$meta_box){
-            $meta_box = __('General');
+            $meta_box = 'General';
         }
         $meta_box = wp_strip_all_tags($meta_box);
         $meta_box_id = LDC_AIO_SLUG . '-' . sanitize_title($meta_box);
@@ -161,7 +155,7 @@ class LDC_AIO_One {
 
     static private function maybe_add_tab($tab = ''){
         if(!$tab){
-            $tab = __('General');
+            $tab = 'General';
         }
         $tab = wp_strip_all_tags($tab);
         $tab_id = LDC_AIO_SLUG . '-' . sanitize_title($tab);
