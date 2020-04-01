@@ -44,6 +44,24 @@ class LDC_AIO_Beaver_Builder_Theme {
 
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+	static public function customize_controls_print_footer_scripts(){ ?>
+        <script>
+            jQuery(document).ready(function($){
+                $('.wp-picker-container').iris({
+                    mode: 'hsl',
+                    controls: {
+                        horiz: 'h', // square horizontal displays hue
+                        vert: 's', // square vertical displays saturdation
+                        strip: 'l' // slider displays lightness
+                    },
+                    palettes: ['#007bff', '#6c757d', '#28a745', '#17a2b8', '#ffc107', '#dc3545', '#f8f9fa', '#343a40']
+                })
+            });
+        </script><?php
+	}
+
+    // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 	static public function customize_register($wp_customize){
 		$wp_customize->remove_section('fl-presets');
 	}
@@ -68,6 +86,16 @@ class LDC_AIO_Beaver_Builder_Theme {
     		add_action('admin_footer', array(__CLASS__, 'admin_footer'));
     		add_action('rest_api_init', array(__CLASS__, 'rest_api_init'));
             $meta_box_and_tab = 'Beaver Builder Theme';
+            LDC_AIO_One::add_setting('add_b4_color_palette', array(
+            	'name' => 'Add Bootstrap 4 color palette?',
+            	'on_label' => '<i class="dashicons dashicons-yes"></i>',
+            	'style' => 'square',
+            	'type' => 'switch',
+            ), $meta_box_and_tab);
+            $add_b4_color_palette = LDC_AIO_One::get_setting('add_b4_color_palette');
+            if($add_b4_color_palette){
+                add_action('customize_controls_print_footer_scripts', array(__CLASS__, 'customize_controls_print_footer_scripts'));
+            }
             LDC_AIO_One::add_setting('reboot_default_styles', array(
             	'name' => 'Reboot default styles?',
                 'std' => '<button id="reboot_default_styles" class="button">Reboot</button>',
