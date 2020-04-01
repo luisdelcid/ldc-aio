@@ -58,7 +58,7 @@ class LDC_AIO_One {
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
     static public function init(){
-		require_once(LDC_AIO_DIR . 'in/plugin-update-checker-4.9/vendor/autoload.php');
+		require_once(LDC_AIO_DIR . 'in/plugin-update-checker/vendor/autoload.php');
 		Puc_v4_Factory::buildUpdateChecker('https://github.com/luisdelcid/' . LDC_AIO_SLUG, LDC_AIO_FILE, LDC_AIO_SLUG);
 		add_action('admin_notices', array(__CLASS__, 'admin_notices'));
         add_filter('mb_settings_pages', array(__CLASS__, 'mb_settings_pages'));

@@ -5,7 +5,7 @@
 if(!function_exists('ldc_generate_jwt')){
 	function ldc_generate_jwt($iss = '', $key = ''){
 		if($iss and $key){
-			require_once(LDC_AIO_DIR . 'in/php-jwt-5.2.0/vendor/autoload.php');
+			require_once(LDC_AIO_DIR . 'in/php-jwt/vendor/autoload.php');
 			$payload = array(
 				'iss' => $iss,
 				'exp' => time() + MINUTE_IN_SECONDS, // GMT time
