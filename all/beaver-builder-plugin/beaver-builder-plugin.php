@@ -2,11 +2,37 @@
 
 class LDC_AIO_Beaver_Builder_Plugin {
 
+    // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+    static public function fl_builder_color_presets($colors){
+        $b4_colors = array(
+            '007bff', // primary
+            '6c757d', // secondary
+            '28a745', // success
+            '17a2b8', // info
+            'ffc107', // warning
+            'dc3545', // danger
+            'f8f9fa', // light
+            '343a40', // dark
+        );
+        $colors = array_merge($b4_colors, $colors);
+        return $colors;
+    }
 
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
     static public function init(){
         $meta_box_and_tab = 'Beaver Builder Plugin';
+        LDC_AIO_One::add_setting('add_b4_color_presets', array(
+        	'name' => 'Add Bootstrap 4 color presets?',
+        	'on_label' => '<i class="dashicons dashicons-yes"></i>',
+        	'style' => 'square',
+        	'type' => 'switch',
+        ), $meta_box_and_tab);
+        $add_b4_color_presets = LDC_AIO_One::get_setting('add_b4_color_presets');
+        if($add_b4_color_presets){
+            add_filter('fl_builder_color_presets', array(__CLASS__, 'fl_builder_color_presets'));
+        }
         LDC_AIO_One::add_setting('disable_inline_editing', array(
         	'name' => 'Disable inline editing?',
         	'on_label' => '<i class="dashicons dashicons-yes"></i>',
