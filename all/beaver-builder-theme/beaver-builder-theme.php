@@ -46,16 +46,20 @@ class LDC_AIO_Beaver_Builder_Theme {
 
 	static public function customize_controls_print_footer_scripts(){ ?>
         <script>
-            jQuery(document).ready(function($){
-                $('.wp-picker-container').iris({
-                    mode: 'hsl',
-                    controls: {
-                        horiz: 'h', // square horizontal displays hue
-                        vert: 's', // square vertical displays saturdation
-                        strip: 'l' // slider displays lightness
-                    },
-                    palettes: ['#007bff', '#6c757d', '#28a745', '#17a2b8', '#ffc107', '#dc3545', '#f8f9fa', '#343a40']
-                })
+            var b4_colors = [
+                '#007bff', // primary
+                '#6c757d', // secondary
+                '#28a745', // success
+                '#17a2b8', // info
+                '#ffc107', // warning
+                '#dc3545', // danger
+                '#f8f9fa', // light
+                '#343a40', // dark
+            ];
+            jQuery(function($){
+                $.wp.wpColorPicker.prototype.options = {
+                    palettes: b4_colors,
+                };
             });
         </script><?php
 	}
