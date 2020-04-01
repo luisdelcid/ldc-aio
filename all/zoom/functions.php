@@ -18,6 +18,14 @@ if(!function_exists('ldc_generate_jwt')){
 
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+if(!function_exists('ldc_zoom_api')){
+	function ldc_zoom_api($api = ''){
+		return new LDC_AIO_Zoom_API($api);
+	}
+}
+
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 if(!function_exists('ldc_zoom_request')){
 	function ldc_zoom_request($api = '', $point = '', $arguments = array()){
 		if($api and $point){
