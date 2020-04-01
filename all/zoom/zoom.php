@@ -1,6 +1,6 @@
 <?php
 
-class LDC_AIO_Beaver_Builder_Theme {
+class LDC_AIO_Zoom {
 
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -20,4 +20,4 @@ class LDC_AIO_Beaver_Builder_Theme {
 
 }
 
-LDC_AIO_Beaver_Builder_Theme::init();
+LDC_AIO_Zoom::init();
