@@ -1,7 +1,6 @@
 <?php
 
-if(!class_exists('LDC_AIO_Zoom_API', false)){
-    class LDC_AIO_Zoom_API {
+class LDC_AIO_Zoom_API {
 
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -21,5 +20,4 @@ if(!class_exists('LDC_AIO_Zoom_API', false)){
 
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-    }
 }

@@ -4,7 +4,7 @@
 
 if(!function_exists('ldc_google_client')){
 	function ldc_google_client($config = array()){
-        if(class_exists('Google_Client', false)){
+        if(class_exists('Google_Client')){
             return new Google_Client($config);
         }
 		return null;
