@@ -131,7 +131,7 @@ if(!function_exists('ldc_is_success')){
     			return true;
     		}
         } elseif(ldc_is_response($code)){
-            return $code['status'];
+            return $code['success'];
         }
 		return false;
 	}
