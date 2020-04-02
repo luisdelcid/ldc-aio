@@ -159,7 +159,7 @@ if(!function_exists('ldc_maybe_merge_response')){
         if(ldc_is_response($response)){
             $data = $response['data'];
             if(ldc_is_response($data)){
-                $data = ldc_maybe_json_decode_response($data);
+                $data = ldc_maybe_json_decode_response($data, true);
                 $response['data'] = $data['data'];
                 $response['message'] = $data['message'];
                 $response['success'] = $data['success'];
@@ -301,7 +301,7 @@ if(!function_exists('ldc_response')){
 			'message' => $message,
 			'success' => $success,
 		);
-        $response = ldc_maybe_json_decode_response($response);
+        $response = ldc_maybe_json_decode_response($response, true);
         $response = ldc_maybe_merge_response($response);
 		return $response;
 	}
