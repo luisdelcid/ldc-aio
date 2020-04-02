@@ -125,10 +125,14 @@ if(!function_exists('ldc_is_response')){
 
 if(!function_exists('ldc_is_success')){
 	function ldc_is_success($code = 0){
-        $code = (int) $code;
-		if($code >= 200 and $code < 300){
-			return true;
-		}
+        if(is_numeric($code)){
+            $code = (int) $code;
+    		if($code >= 200 and $code < 300){
+    			return true;
+    		}
+        } elseif(ldc_is_response($code)){
+            return $code['status'];
+        }
 		return false;
 	}
 }
