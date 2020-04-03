@@ -53,6 +53,35 @@ if(!function_exists('ldc_attachment_url_to_postid')){
 
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+if(!function_exists('ldc_check_filetype')){
+	function ldc_check_filetype($file = ''){
+		$filename = basename($file);
+		$filetype = wp_check_filetype($filename);
+		$filetype['name'] = $filename;
+		if($filetype['ext']){
+			return $filetype;
+		} elseif(file_exists($file)){
+			$finfo = new finfo(FILEINFO_MIME_TYPE);
+			$type = $finfo->file($file);
+			if($type){
+				$filetype['type'] = $type;
+				foreach(wp_get_mime_types() as $ext => $mime_type){
+					if($mime_type == $type){
+						$ext = explode('|', $ext);
+						$ext = $ext[0];
+						$filetype['ext'] = $ext;
+						$filetype['name'] .= '.' . $ext;
+						break;
+					}
+				}
+			}
+		}
+		return $filetype;
+	}
+}
+
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 if(!function_exists('ldc_guid_to_postid')){
 	function ldc_guid_to_postid($guid = ''){
         global $wpdb;
