@@ -53,30 +53,16 @@ if(!function_exists('ldc_attachment_url_to_postid')){
 
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-if(!function_exists('ldc_check_filetype')){
-	function ldc_check_filetype($file = ''){
-		$filename = basename($file);
-		$filetype = wp_check_filetype($filename);
-		$filetype['name'] = $filename;
-		if($filetype['ext']){
-			return $filetype;
-		} elseif(file_exists($file)){
-			$finfo = new finfo(FILEINFO_MIME_TYPE);
-			$type = $finfo->file($file);
-			if($type){
-				$filetype['type'] = $type;
-				foreach(wp_get_mime_types() as $ext => $mime_type){
-					if($mime_type == $type){
-						$ext = explode('|', $ext);
-						$ext = $ext[0];
-						$filetype['ext'] = $ext;
-						$filetype['name'] .= '.' . $ext;
-						break;
-					}
-				}
+if(!function_exists('ldc_get_extensions')){
+	function ldc_get_extensions(){
+		$extensions = array();
+		foreach(wp_get_mime_types() as $exts => $mime){
+			$exts = explode('|', $exts);
+			foreach($exts as $ext){
+				$extensions[$ext] = $mime;
 			}
 		}
-		return $filetype;
+		return $extensions;
 	}
 }
 
@@ -112,13 +98,26 @@ if(!function_exists('ldc_maybe_require_media_functions')){
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 if(!function_exists('ldc_sideload_file')){
-    function ldc_sideload_file($url = '', $post = null, $name = ''){
+    function ldc_sideload_file($url = '', $post = null){
         ldc_maybe_require_media_functions();
     	$file_array = array(
     		'tmp_name' => download_url($url)
     	);
     	if(!is_wp_error($file_array['tmp_name'])){
-            $file_array['name'] = $name ? $name : basename($url);
+			$file_array['name'] = basename($url);
+			$ext = pathinfo($file_array['name'], PATHINFO_EXTENSION);
+			if(!$ext){
+				$finfo = new finfo(FILEINFO_MIME_TYPE);
+				$ftype = $finfo->file($file_array['tmp_name']);
+				if($ftype){
+					foreach(ldc_get_extensions() as $ext => $mime){
+						if($ftype == $mime){
+							$file_array['name'] .= '.' . $ext;
+							break;
+						}
+					}
+				}
+			}
             $post = get_post($post);
             $post_id = $post ? $post->ID : 0;
     		$attachment_id = media_handle_sideload($file_array, $post_id);
