@@ -98,13 +98,13 @@ if(!function_exists('ldc_maybe_require_media_functions')){
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 if(!function_exists('ldc_sideload_file')){
-    function ldc_sideload_file($url = '', $post = null){
+    function ldc_sideload_file($url = '', $name = '', $post = null){
         ldc_maybe_require_media_functions();
     	$file_array = array(
     		'tmp_name' => download_url($url)
     	);
     	if(!is_wp_error($file_array['tmp_name'])){
-			$file_array['name'] = basename($url);
+			$file_array['name'] = $name ? $name : basename($url);
 			$ext = pathinfo($file_array['name'], PATHINFO_EXTENSION);
 			if(!$ext){
 				$finfo = new finfo(FILEINFO_MIME_TYPE);
