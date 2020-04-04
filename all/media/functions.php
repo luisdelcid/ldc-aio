@@ -53,21 +53,6 @@ if(!function_exists('ldc_attachment_url_to_postid')){
 
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-if(!function_exists('ldc_get_extensions')){
-	function ldc_get_extensions(){
-		$extensions = array();
-		foreach(wp_get_mime_types() as $exts => $mime){
-			$exts = explode('|', $exts);
-			foreach($exts as $ext){
-				$extensions[$ext] = $mime;
-			}
-		}
-		return $extensions;
-	}
-}
-
-// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
 if(!function_exists('ldc_guid_to_postid')){
 	function ldc_guid_to_postid($guid = ''){
         global $wpdb;
@@ -107,6 +92,19 @@ if(!function_exists('ldc_sideload_file')){
 			return $file_array['tmp_name'];
 		}
     	$file_array['name'] = $name ? $name : basename($url);
+		$ext = pathinfo($file_array['name'], PATHINFO_EXTENSION);
+		if(!$ext and extension_loaded('fileinfo')){
+			$finfo = finfo_open(FILEINFO_MIME_TYPE);
+			$real_mime = finfo_file($finfo, $file_array['tmp_name']);
+			finfo_close($finfo);
+			foreach(wp_get_mime_types() as $exts => $mime){
+				if($mime == $real_mime){
+					$exts = explode('|', $exts);
+					$file_array['name'] .= '.' . $exts[0];
+					break;
+				}
+			}
+		}
 		$post = get_post($post);
 		$post_id = $post ? $post->ID : 0;
 		$attachment_id = media_handle_sideload($file_array, $post_id);
