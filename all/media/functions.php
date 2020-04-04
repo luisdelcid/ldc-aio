@@ -103,31 +103,19 @@ if(!function_exists('ldc_sideload_file')){
     	$file_array = array(
     		'tmp_name' => download_url($url)
     	);
-    	if(!is_wp_error($file_array['tmp_name'])){
-			$file_array['name'] = $name ? $name : basename($url);
-			$ext = pathinfo($file_array['name'], PATHINFO_EXTENSION);
-			if(!$ext){
-				$finfo = new finfo(FILEINFO_MIME_TYPE);
-				$ftype = $finfo->file($file_array['tmp_name']);
-				if($ftype){
-					foreach(ldc_get_extensions() as $ext => $mime){
-						if($ftype == $mime){
-							$file_array['name'] .= '.' . $ext;
-							break;
-						}
-					}
-				}
-			}
-            $post = get_post($post);
-            $post_id = $post ? $post->ID : 0;
-    		$attachment_id = media_handle_sideload($file_array, $post_id);
-    		if(is_wp_error($attachment_id)){
-    			@unlink($file_array['tmp_name']);
-    		} else {
-    			return $attachment_id;
-    		}
-    	}
-    	return 0;
+		if(is_wp_error($file_array['tmp_name'])){
+			return $file_array['tmp_name'];
+		}
+    	$file_array['name'] = $name ? $name : basename($url);
+		$post = get_post($post);
+		$post_id = $post ? $post->ID : 0;
+		$attachment_id = media_handle_sideload($file_array, $post_id);
+		if(is_wp_error($attachment_id)){
+			@unlink($file_array['tmp_name']);
+			return $attachment_id;
+		} else {
+			return $attachment_id;
+		}
     }
 }
 
