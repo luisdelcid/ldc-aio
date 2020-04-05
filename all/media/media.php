@@ -20,8 +20,7 @@ class LDC_AIO_Media {
         	'style' => 'square',
         	'type' => 'switch',
         ), $meta_box_and_tab);
-        $add_hd_and_full_hd_image_size = LDC_AIO_One::get_setting('add_hd_and_full_hd_image_size');
-        if($add_hd_and_full_hd_image_size){
+        if(LDC_AIO_One::get_setting('add_hd_and_full_hd_image_size')){
             add_image_size('hd', 1280, 1280);
             add_image_size('full-hd', 1920, 1920);
             add_filter('image_size_names_choose', array(__CLASS__, 'image_size_names_choose'));
@@ -32,8 +31,7 @@ class LDC_AIO_Media {
         	'style' => 'square',
         	'type' => 'switch',
         ), $meta_box_and_tab);
-        $remove_filename_accents = LDC_AIO_One::get_setting('remove_filename_accents');
-        if($remove_filename_accents){
+        if(LDC_AIO_One::get_setting('remove_filename_accents')){
             add_filter('sanitize_file_name', array(__CLASS__, 'sanitize_file_name'));
         }
         LDC_AIO_One::add_setting('solve_audio_video_conflicts', array(
@@ -42,8 +40,7 @@ class LDC_AIO_Media {
         	'style' => 'square',
         	'type' => 'switch',
         ), $meta_box_and_tab);
-        $solve_audio_video_conflicts = LDC_AIO_One::get_setting('solve_audio_video_conflicts');
-        if($solve_audio_video_conflicts){
+        if(LDC_AIO_One::get_setting('solve_audio_video_conflicts')){
             add_filter('wp_check_filetype_and_ext', array(__CLASS__, 'wp_check_filetype_and_ext'), 10, 5);
         }
 	}

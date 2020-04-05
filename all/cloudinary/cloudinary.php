@@ -21,7 +21,7 @@ class LDC_AIO_Cloudinary {
         if(isset($sizes['full'])){
 			$id = ldc_attachment_url_to_postid($sizes['full']['url']);
 			if($id){
-				if(self::$image_sizes and self::$config){
+				if(self::$image_sizes){
 					foreach(self::$image_sizes as $name => $args){
 						$image = get_post_meta($id, '_ldc_cl_image_' . $args['options_md5'], true);
 						if($image and !isset($sizes[$name])){
@@ -45,7 +45,7 @@ class LDC_AIO_Cloudinary {
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
     static public function image_downsize($out, $id, $size){
-        if(wp_attachment_is_image($id) and is_string($size) and isset(self::$image_sizes[$size]) and self::$config){
+        if(wp_attachment_is_image($id) and is_string($size) and isset(self::$image_sizes[$size])){
             $image = self::image_get_intermediate_size($id, $size);
             if($image){
                 return $image;
@@ -57,7 +57,7 @@ class LDC_AIO_Cloudinary {
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
     static public function image_size_names_choose($sizes){
-        if(self::$image_sizes and self::$config){
+        if(self::$image_sizes){
             foreach(self::$image_sizes as $name => $args){
                 if(!isset($sizes[$name])){
                     $sizes[$name] = $args['name'];
@@ -70,9 +70,6 @@ class LDC_AIO_Cloudinary {
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
     static public function init(){
-        add_filter('fl_builder_photo_sizes_select', array(__CLASS__, 'fl_builder_photo_sizes_select'));
-        add_filter('image_downsize', array(__CLASS__, 'image_downsize'), 10, 3);
-        add_filter('image_size_names_choose', array(__CLASS__, 'image_size_names_choose'));
         $meta_box_and_tab = 'Cloudinary';
         LDC_AIO_One::add_setting('cloudinary_api_key', array(
         	'name' => 'API Key',
@@ -96,7 +93,9 @@ class LDC_AIO_Cloudinary {
                 'api_secret' => $api_secret,
                 'cloud_name' => $cloud_name,
             ));
-            self::$config = true;
+            add_filter('fl_builder_photo_sizes_select', array(__CLASS__, 'fl_builder_photo_sizes_select'));
+            add_filter('image_downsize', array(__CLASS__, 'image_downsize'), 10, 3);
+            add_filter('image_size_names_choose', array(__CLASS__, 'image_size_names_choose'));
         }
 	}
 

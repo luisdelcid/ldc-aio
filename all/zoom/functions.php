@@ -20,6 +20,7 @@ if(!function_exists('ldc_generate_jwt')){
 
 if(!function_exists('ldc_zoom_api')){
 	function ldc_zoom_api($api = ''){
+		require_once(LDC_AIO_DIR . 'all/zoom/zoom-api.php');
 		return new LDC_AIO_Zoom_API($api);
 	}
 }
@@ -28,7 +29,9 @@ if(!function_exists('ldc_zoom_api')){
 
 if(!function_exists('ldc_zoom_request')){
 	function ldc_zoom_request($api = '', $point = '', $arguments = array()){
-		if($api and $point){
+		$api_key = apply_filters('zoom_api_key', LDC_AIO_One::get_setting('zoom_api_key'));
+		$api_secret = apply_filters('zoom_api_secret', LDC_AIO_One::get_setting('zoom_api_secret'));
+		if($api_key and $api_secret and $api and $point){
 			$endpoints = array(
 	            'cloud_recording' => array(
 	                'list_all_recordings' => array(
@@ -120,11 +123,7 @@ if(!function_exists('ldc_zoom_request')){
 			            $offset = count($arguments) - $parameters;
 			            $arguments = array_splice($arguments, -$offset);
 			        }
-					$api_key = LDC_AIO_One::get_setting('zoom_api_key');
-					$api_key = apply_filters('ldc_zoom_api_key', $api_key);
-					$api_secret = LDC_AIO_One::get_setting('zoom_api_secret');
-					$api_secret = apply_filters('ldc_zoom_api_secret', $api_secret);
-			        $jwt = ldc_generate_jwt($api_key, $api_secret);
+					$jwt = ldc_generate_jwt($api_key, $api_secret);
 			        if($jwt){
 						$url = 'https://api.zoom.us/v2';
 						$url = apply_filters('ldc_zoom_url', $url);

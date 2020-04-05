@@ -99,12 +99,16 @@ class LDC_AIO_Beaver_Builder {
 
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+    static public function fl_row_resize_settings($settings){
+        $settings['userCanResizeRows'] = false;
+        return $settings;
+	}
+
+    // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
     static public function init(){
         $current_theme = wp_get_theme();
 		if($current_theme->get('Name') == 'Beaver Builder Theme' or $current_theme->get('Template') == 'bb-theme'){
-            add_action('admin_enqueue_scripts', array(__CLASS__, 'admin_enqueue_scripts'));
-    		add_action('admin_footer', array(__CLASS__, 'admin_footer'));
-    		add_action('rest_api_init', array(__CLASS__, 'rest_api_init'));
             $meta_box_and_tab = 'Beaver Builder Theme';
             LDC_AIO_One::add_setting('add_b4_color_palette', array(
             	'name' => 'Add Bootstrap 4 color palette?',
@@ -112,8 +116,7 @@ class LDC_AIO_Beaver_Builder {
             	'style' => 'square',
             	'type' => 'switch',
             ), $meta_box_and_tab);
-            $add_b4_color_palette = LDC_AIO_One::get_setting('add_b4_color_palette');
-            if($add_b4_color_palette){
+            if(LDC_AIO_One::get_setting('add_b4_color_palette')){
                 add_action('customize_controls_print_footer_scripts', array(__CLASS__, 'customize_controls_print_footer_scripts'));
             }
             LDC_AIO_One::add_setting('reboot_default_styles', array(
@@ -121,6 +124,9 @@ class LDC_AIO_Beaver_Builder {
                 'std' => '<button id="reboot_default_styles" class="button">Reboot</button>',
                 'type' => 'custom_html',
             ), $meta_box_and_tab);
+            add_action('admin_enqueue_scripts', array(__CLASS__, 'admin_enqueue_scripts'));
+    		add_action('admin_footer', array(__CLASS__, 'admin_footer'));
+            add_action('rest_api_init', array(__CLASS__, 'rest_api_init'));
             LDC_AIO_One::add_setting('remove_default_styles', array(
                 'label_description' => 'You must <a href="' . admin_url('options-general.php?page=fl-builder-settings#tools') . '" target="_blank">clear cache</a> for new settings to take effect.',
             	'name' => 'Remove default styles?',
@@ -128,8 +134,7 @@ class LDC_AIO_Beaver_Builder {
             	'style' => 'square',
             	'type' => 'switch',
             ), $meta_box_and_tab);
-            $remove_default_styles = LDC_AIO_One::get_setting('remove_default_styles');
-            if($remove_default_styles){
+            if(LDC_AIO_One::get_setting('remove_default_styles')){
                 add_filter('fl_theme_compile_less_paths', array(__CLASS__, 'fl_theme_compile_less_paths'));
             }
             LDC_AIO_One::add_setting('remove_presets', array(
@@ -138,8 +143,7 @@ class LDC_AIO_Beaver_Builder {
             	'style' => 'square',
             	'type' => 'switch',
             ), $meta_box_and_tab);
-            $remove_presets = LDC_AIO_One::get_setting('remove_presets');
-            if($remove_presets){
+            if(LDC_AIO_One::get_setting('remove_presets')){
                 add_action('customize_register', array(__CLASS__, 'customize_register'), 20);
             }
         }
@@ -150,8 +154,7 @@ class LDC_AIO_Beaver_Builder {
         	'style' => 'square',
         	'type' => 'switch',
         ), $meta_box_and_tab);
-        $add_b4_color_presets = LDC_AIO_One::get_setting('add_b4_color_presets');
-        if($add_b4_color_presets){
+        if(LDC_AIO_One::get_setting('add_b4_color_presets')){
             add_filter('fl_builder_color_presets', array(__CLASS__, 'fl_builder_color_presets'));
         }
         LDC_AIO_One::add_setting('disable_inline_editing', array(
@@ -160,9 +163,17 @@ class LDC_AIO_Beaver_Builder {
         	'style' => 'square',
         	'type' => 'switch',
         ), $meta_box_and_tab);
-        $disable_inline_editing = LDC_AIO_One::get_setting('disable_inline_editing');
-        if($disable_inline_editing){
+        if(LDC_AIO_One::get_setting('disable_inline_editing')){
             add_filter('fl_inline_editing_enabled', '__return_false');
+        }
+        LDC_AIO_One::add_setting('disable_row_resizing', array(
+        	'name' => 'Disable row resizing?',
+        	'on_label' => '<i class="dashicons dashicons-yes"></i>',
+        	'style' => 'square',
+        	'type' => 'switch',
+        ), $meta_box_and_tab);
+        if(LDC_AIO_One::get_setting('disable_row_resizing')){
+            add_filter('fl_row_resize_settings', array(__CLASS__, 'fl_row_resize_settings'));
         }
         LDC_AIO_One::add_setting('expand_templates_into_navigation_mega_menus', array(
         	'name' => 'Expand templates into navigation mega menus?',
@@ -170,8 +181,7 @@ class LDC_AIO_Beaver_Builder {
         	'style' => 'square',
         	'type' => 'switch',
         ), $meta_box_and_tab);
-        $expand_templates_into_navigation_mega_menus = LDC_AIO_One::get_setting('expand_templates_into_navigation_mega_menus');
-        if($expand_templates_into_navigation_mega_menus){
+        if(LDC_AIO_One::get_setting('expand_templates_into_navigation_mega_menus')){
             add_filter('walker_nav_menu_start_el', array(__CLASS__, 'walker_nav_menu_start_el'), 10, 4);
         }
 	}

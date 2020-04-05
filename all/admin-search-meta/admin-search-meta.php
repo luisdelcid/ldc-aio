@@ -12,20 +12,18 @@ class LDC_AIO_Admin_Search_Meta {
         	'style' => 'square',
         	'type' => 'switch',
         ), $meta_box_and_tab);
+        if(LDC_AIO_One::get_setting('search_post_metadata')){
+            add_filter('posts_groupby', array(__CLASS__, 'posts_groupby'));
+            add_filter('posts_join', array(__CLASS__, 'posts_join'));
+            add_filter('posts_where', array(__CLASS__, 'posts_where'));
+        }
         LDC_AIO_One::add_setting('search_user_metadata', array(
         	'name' => 'Search User Metadata?',
         	'on_label' => '<i class="dashicons dashicons-yes"></i>',
         	'style' => 'square',
         	'type' => 'switch',
         ), $meta_box_and_tab);
-        $search_post_metadata = LDC_AIO_One::get_setting('search_post_metadata');
-        if($search_post_metadata){
-            add_filter('posts_groupby', array(__CLASS__, 'posts_groupby'));
-            add_filter('posts_join', array(__CLASS__, 'posts_join'));
-            add_filter('posts_where', array(__CLASS__, 'posts_where'));
-        }
-        $search_user_metadata = LDC_AIO_One::get_setting('search_user_metadata');
-        if($search_user_metadata){
+        if(LDC_AIO_One::get_setting('search_user_metadata')){
             add_filter('users_pre_query', array(__CLASS__, 'users_pre_query'), 10, 2);
         }
     }
