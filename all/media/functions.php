@@ -23,7 +23,7 @@ if(!function_exists('ldc_attachment_url_to_postid')){
 				}
 			}
 			/** scaled */
-			preg_match('/^(.+)(-scaled)(\.' . substr($url, strrpos($url, '.') + 1) . ')?$/', $url, $matches);
+			/*preg_match('/^(.+)(-scaled)(\.' . substr($url, strrpos($url, '.') + 1) . ')?$/', $url, $matches);
 			if($matches){
 				$url = $matches[1];
 				if(isset($matches[3])){
@@ -33,7 +33,7 @@ if(!function_exists('ldc_attachment_url_to_postid')){
 				if($post_id){
 					return $post_id;
 				}
-			}
+			}*/
 			/** edited */
 			preg_match('/^(.+)(-e\d+)(\.' . substr($url, strrpos($url, '.') + 1) . ')?$/', $url, $matches);
 			if($matches){
