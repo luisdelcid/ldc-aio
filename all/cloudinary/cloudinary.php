@@ -19,7 +19,7 @@ class LDC_AIO_Cloudinary {
 
     static public function fl_builder_photo_sizes_select($sizes){
         if(isset($sizes['full'])){
-			$id = ldc_guid_to_postid($sizes['full']['url']);
+			$id = ldc_attachment_url_to_postid($sizes['full']['url']);
 			if($id){
 				if(self::$image_sizes and self::$config){
 					foreach(self::$image_sizes as $name => $args){
