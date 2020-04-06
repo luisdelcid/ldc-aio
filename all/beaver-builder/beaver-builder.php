@@ -170,6 +170,15 @@ class LDC_AIO_Beaver_Builder {
         if(LDC_AIO_One::get_setting('add_b4_color_presets')){
             add_filter('fl_builder_color_presets', array(__CLASS__, 'fl_builder_color_presets'));
         }
+        LDC_AIO_One::add_setting('disable_column_resizing', array(
+        	'name' => 'Disable column resizing?',
+        	'on_label' => '<i class="dashicons dashicons-yes"></i>',
+        	'style' => 'square',
+        	'type' => 'switch',
+        ), $meta_box_and_tab);
+        if(LDC_AIO_One::get_setting('disable_column_resizing')){
+            add_filter('wp_head', array(__CLASS__, 'wp_head'));
+        }
         LDC_AIO_One::add_setting('disable_inline_editing', array(
         	'name' => 'Disable inline editing?',
         	'on_label' => '<i class="dashicons dashicons-yes"></i>',
@@ -292,6 +301,16 @@ class LDC_AIO_Beaver_Builder {
             $item_output .= $args->after;
         }
         return $item_output;
+	}
+
+    // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+    static public function wp_head(){ ?>
+        <style>
+            .fl-block-col-resize {
+                display: none;
+            }
+        </style><?php
 	}
 
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
