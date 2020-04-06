@@ -305,12 +305,14 @@ class LDC_AIO_Beaver_Builder {
 
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-    static public function wp_head(){ ?>
-        <style>
-            .fl-block-col-resize {
-                display: none;
-            }
-        </style><?php
+    static public function wp_head(){
+        if(isset($_GET['fl_builder'])){ ?>
+            <style>
+                .fl-block-col-resize {
+                    display: none;
+                }
+            </style><?php
+        }
 	}
 
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
