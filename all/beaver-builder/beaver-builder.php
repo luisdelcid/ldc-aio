@@ -104,7 +104,7 @@ class LDC_AIO_Beaver_Builder {
     static public function fl_theme_compile_less_paths($paths){
         foreach($paths as $index => $path){
             if($path == FL_THEME_DIR . '/less/theme.less'){
-                $paths[$index] = LDC_AIO_DIR . 'all/beaver-builder-theme/theme.less';
+                $paths[$index] = LDC_AIO_DIR . 'all/beaver-builder/theme.less';
             }
         }
         return $paths;
