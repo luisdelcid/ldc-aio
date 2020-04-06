@@ -59,6 +59,28 @@ class LDC_AIO_Meta_Box {
             add_filter('rwmb_col_close_outer_html', array(__CLASS__, 'rwmb_col_close_outer_html'), 20, 2);
             add_filter('rwmb_raw_html_outer_html', array(__CLASS__, 'rwmb_raw_html_outer_html'), 20, 2);
         }
+        LDC_AIO_One::add_setting('fix_conditional_logic', array(
+        	'name' => 'Fix conditional logic?',
+        	'on_label' => '<i class="dashicons dashicons-yes"></i>',
+        	'style' => 'square',
+        	'type' => 'switch',
+        ), $meta_box_and_tab);
+        if(LDC_AIO_One::get_setting('fix_conditional_logic')){
+            add_action('init', function(){
+                if(!defined('MB_FRONTEND_SUBMISSION_DIR') and defined('MB_USER_PROFILE_DIR')){
+    				define('MB_FRONTEND_SUBMISSION_DIR', MB_USER_PROFILE_DIR);
+    			}
+            }, 21);
+        }
+        LDC_AIO_One::add_setting('fix_validation', array(
+        	'name' => 'Fix validation?',
+        	'on_label' => '<i class="dashicons dashicons-yes"></i>',
+        	'style' => 'square',
+        	'type' => 'switch',
+        ), $meta_box_and_tab);
+        if(LDC_AIO_One::get_setting('fix_validation')){
+            add_action('rwmb_enqueue_scripts', array(__CLASS__, 'rwmb_enqueue_scripts'));
+        }
         LDC_AIO_One::add_setting('use_date_i18n', array(
         	'name' => 'Use date_i18n instead of date on date and datetime fields?',
         	'on_label' => '<i class="dashicons dashicons-yes"></i>',
@@ -69,6 +91,26 @@ class LDC_AIO_Meta_Box {
             add_filter('rwmb_the_value', array(__CLASS__, 'rwmb_the_value'), 20, 4);
         }
 	}
+
+    // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+    static public function rwmb_enqueue_scripts($object){
+        if(!empty($object->meta_box['validation'])){
+            $url = LDC_AIO_DIR . 'all/meta-box/validate.js';
+            wp_dequeue_script('rwmb-validate');
+            wp_deregister_script('rwmb-validate');
+            wp_enqueue_script('rwmb-validate', $url, array('jquery-validation', 'jquery-validation-additional-methods'), RWMB_VER . '-fixed.' . LDC_AIO_VERSION, true);
+            if(is_callable(array('RWMB_Helpers_Field', 'localize_script_once'))){
+                RWMB_Helpers_Field::localize_script_once('rwmb-validate', 'rwmbValidate', array(
+                    'summaryMessage' => esc_html__('Please correct the errors highlighted below and try again.', 'meta-box'),
+                ));
+            } elseif(is_callable(array('RWMB_Helpers_Field', 'localize_script_once'))){
+                RWMB_Field::localize_script('rwmb-validate', 'rwmbValidate', array(
+                    'summaryMessage' => esc_html__('Please correct the errors highlighted below and try again.', 'meta-box'),
+                ));
+            }
+        }
+    }
 
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
