@@ -14,7 +14,7 @@ jQuery( function ( $ ) {
 				$form.trigger( 'after_validate' );
 			}, 200 );
 		},
-		ignore: ':hidden [class|="rwmb"], :not([class|="rwmb"])',
+		ignore: ':not([class|="rwmb"]:visible)',
 		errorPlacement: function( error, element ) {
 			error.appendTo( element.closest( '.rwmb-input' ) );
 		},
@@ -54,7 +54,7 @@ jQuery( function ( $ ) {
 	} );
 
 	// Execute.
-    $form.each( function(){
+	$form.each( function(){
 		$( this ).on( 'submit', function() {
 			// Update underlying textarea before submit validation.
 			if ( typeof tinyMCE !== 'undefined' ) {
