@@ -88,6 +88,19 @@ class LDC_AIO_Beaver_Builder {
 
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+    static public function fl_theme_builder_before_render_content(){
+        global $wp_query;
+    	if(!$wp_query->in_the_loop){
+    		$wp_query->in_the_loop = true;
+    		add_action('fl_theme_builder_after_render_content', function(){
+    			global $wp_query;
+    			$wp_query->in_the_loop = false;
+    		});
+    	}
+	}
+
+    // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
     static public function fl_theme_compile_less_paths($paths){
         foreach($paths as $index => $path){
             if($path == FL_THEME_DIR . '/less/theme.less'){
@@ -183,6 +196,16 @@ class LDC_AIO_Beaver_Builder {
         ), $meta_box_and_tab);
         if(LDC_AIO_One::get_setting('expand_templates_into_navigation_mega_menus')){
             add_filter('walker_nav_menu_start_el', array(__CLASS__, 'walker_nav_menu_start_el'), 10, 4);
+        }
+        $meta_box_and_tab = 'Beaver Themer Plugin';
+        LDC_AIO_One::add_setting('fix_in_the_loop', array(
+        	'name' => 'Fix in the loop?',
+        	'on_label' => '<i class="dashicons dashicons-yes"></i>',
+        	'style' => 'square',
+        	'type' => 'switch',
+        ), $meta_box_and_tab);
+        if(LDC_AIO_One::get_setting('fix_in_the_loop')){
+            add_action('fl_theme_builder_before_render_content', array(__CLASS__, 'fl_theme_builder_before_render_content'));
         }
 	}
 
