@@ -156,7 +156,7 @@ class LDC_AIO_Roles_and_Capabilities {
 					return $error;
 				}
 				if(!current_user_can(LDC_AIO_One::get_setting('hide_rest_api_capability'))){
-					return new WP_Error('rest_not_logged_in', __('You are not currently logged in.'), array(
+					return new WP_Error('rest_user_cannot_view', __('You need a higher level of permission.'), array(
 						'status' => 401,
 					));
 				}
