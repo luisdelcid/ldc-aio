@@ -78,7 +78,7 @@ class LDC_AIO_Roles_and_Capabilities {
         ), $meta_box_and_tab);
         LDC_AIO_One::add_setting('hide_posts_capability', array(
         	'name' => '— Minimum capability required to view others posts:',
-        	'std' => 'edit_posts',
+        	'std' => 'edit_others_posts',
         	'type' => 'text',
             'visible' => array('hide_posts', true),
         ), $meta_box_and_tab);
