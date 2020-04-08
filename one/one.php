@@ -61,6 +61,7 @@ class LDC_AIO_One {
 		require_once(LDC_AIO_DIR . 'in/plugin-update-checker/vendor/autoload.php');
 		Puc_v4_Factory::buildUpdateChecker('https://github.com/luisdelcid/' . LDC_AIO_SLUG, LDC_AIO_FILE, LDC_AIO_SLUG);
 		add_action('admin_notices', array(__CLASS__, 'admin_notices'));
+		add_action('wp_enqueue_scripts', array(__CLASS__, 'wp_enqueue_scripts'));
         add_filter('mb_settings_pages', array(__CLASS__, 'mb_settings_pages'));
         add_filter('rwmb_meta_boxes', array(__CLASS__, 'rwmb_meta_boxes'));
 		self::add_setting('powered_by', array(
@@ -113,7 +114,7 @@ class LDC_AIO_One {
         return $settings_pages;
 	}
 
-    // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+	// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
     static public function rwmb_meta_boxes($meta_boxes){
         if(is_admin()){
@@ -125,6 +126,12 @@ class LDC_AIO_One {
             }
         }
         return $meta_boxes;
+	}
+
+    // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+    static public function wp_enqueue_scripts(){
+        wp_enqueue_script('ldc-functions', LDC_AIO_URL . 'one/functions.js', array('jquery'), LDC_AIO_VERSION);
 	}
 
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
