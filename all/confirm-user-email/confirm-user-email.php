@@ -37,6 +37,57 @@ class LDC_AIO_Confirm_User_Email {
         	'type' => 'text',
             'visible' => array('confirm_user_email', true),
         ), $meta_box_and_tab);
+		LDC_AIO_One::add_setting('confirm_user_email_action', array(
+        	'name' => '— Action name:',
+        	'std' => 'Confirm your email address',
+        	'type' => 'text',
+            'visible' => array('confirm_user_email', true),
+        ), $meta_box_and_tab);
+		LDC_AIO_One::add_setting('confirm_user_email_alert', array(
+			'desc' => 'Do not change the placeholders. 1: Email address.',
+        	'name' => '— Alert message:',
+			'rows' => 1,
+        	'std' => 'Your email address has not been confirmed yet. Please check your inbox at %1$s for a confirmation email.',
+        	'type' => 'textarea',
+            'visible' => array('confirm_user_email', true),
+        ), $meta_box_and_tab);
+		LDC_AIO_One::add_setting('user_email_confirmation_message', array(
+        	'name' => '— Confirmation message:',
+			'rows' => 1,
+        	'std' => 'Thanks for confirming your email address.',
+        	'type' => 'textarea',
+            'visible' => array('confirm_user_email', true),
+        ), $meta_box_and_tab);
+		LDC_AIO_One::add_setting('confirm_user_email_subject', array(
+			'desc' => 'Do not change the placeholders. 1: Site title, 2: Name of the action.',
+        	'name' => '— Email subject:',
+			'rows' => 1,
+        	'std' => '[%1$s] Confirm Action: %2$s',
+        	'type' => 'textarea',
+            'visible' => array('confirm_user_email', true),
+        ), $meta_box_and_tab);
+		LDC_AIO_One::add_setting('confirm_user_email_message', array(
+			'desc' => 'Do not change DESCRIPTION, CONFIRM_URL, SITENAME, SITEURL: those are placeholders.',
+        	'name' => '— Email message:',
+			'rows' => 15,
+        	'std' => 'Howdy,
+
+A request has been made to perform the following action on your account:
+
+     ###DESCRIPTION###
+
+To confirm this, please click on the following link:
+###CONFIRM_URL###
+
+You can safely ignore and delete this email if you do not want to
+take this action.
+
+Regards,
+All at ###SITENAME###
+###SITEURL###',
+        	'type' => 'textarea',
+            'visible' => array('confirm_user_email', true),
+        ), $meta_box_and_tab);
         if(LDC_AIO_One::get_setting('confirm_user_email')){
             add_action('user_request_action_confirmed', array(__CLASS__, 'user_request_action_confirmed'));
     		add_action('validate_password_reset', array(__CLASS__, 'validate_password_reset'), 10, 2);
@@ -44,6 +95,23 @@ class LDC_AIO_Confirm_User_Email {
     		add_filter('shake_error_codes', array(__CLASS__, 'shake_error_codes'));
     		add_filter('user_request_action_confirmed_message', array(__CLASS__, 'user_request_action_confirmed_message'), 10, 2);
     		add_filter('user_request_action_description', array(__CLASS__, 'user_request_action_description'), 10, 2);
+			add_filter('user_request_action_email_content', array(__CLASS__, 'user_request_action_email_content'), 10, 2);
+			add_filter('user_request_action_email_subject', array(__CLASS__, 'user_request_action_email_subject'), 10, 3);
+			add_action('admin_init', function(){
+				if(!current_user_can(LDC_AIO_One::get_setting('confirm_user_email_capability'))){
+					$user = wp_get_current_user();
+					if(!user_can($user->ID, LDC_AIO_One::get_setting('confirm_user_email_capability'))){
+						if(!self::completed_user_requests($user)){
+							$tmp = self::tmp();
+							LDC_AIO_One::add_admin_notice($tmp->get_error_message(), 'warning');
+						}
+					}
+					/*if(!self::completed_user_requests()){
+						$tmp = self::tmp();
+						LDC_AIO_One::add_admin_notice($tmp->get_error_message(), 'warning');
+					}*/
+				}
+			});
         }
 	}
 
@@ -94,6 +162,7 @@ class LDC_AIO_Confirm_User_Email {
 				}
 			}
 		} elseif(is_wp_error($user)) {
+			// validar si este paso es necesario, o si depende del priority podría obviarlo.
 			if(username_exists($username)){
 				$tmp_user = get_user_by('login', $username);
 				if(!self::completed_user_requests($tmp_user)){
@@ -133,7 +202,7 @@ class LDC_AIO_Confirm_User_Email {
 				$redirect_to = $request_data['redirect_to'];
 			}
 		}
-		$message  = '<p class="success">Gracias por confirmar tu dirección de correo electrónico. <a href="' . esc_url(wp_login_url($redirect_to)) . '" alt="' . __('Log in') . '">' . __('Log in') . '</a></p>';
+		$message  = '<p class="success">' . LDC_AIO_One::get_setting('user_email_confirmation_message') . ' <a href="' . esc_url(wp_login_url($redirect_to)) . '" alt="' . __('Log in') . '">' . __('Log in') . '</a></p>';
 		return $message;
 	}
 
@@ -141,9 +210,27 @@ class LDC_AIO_Confirm_User_Email {
 
 	static public function user_request_action_description($description, $action_name){
 		if($action_name == self::ACTION){
-			$description = __('Confirma tu dirección de correo electrónico');
+			$description = LDC_AIO_One::get_setting('confirm_user_email_action');
 		}
 		return $description;
+	}
+
+    // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+	static public function user_request_action_email_content($email_text, $email_data){
+		if($email_data['request']->action_name != self::ACTION){
+			return $email_text;
+		}
+		return LDC_AIO_One::get_setting('confirm_user_email_message');
+	}
+
+    // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+	static public function user_request_action_email_subject($subject, $sitename, $email_data){
+		if($email_data['request']->action_name != self::ACTION){
+			return $subject;
+		}
+		return sprintf(LDC_AIO_One::get_setting('confirm_user_email_subject'), $sitename, $email_data['description']);
 	}
 
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -249,7 +336,7 @@ class LDC_AIO_Confirm_User_Email {
 			),
 			'fields' => 'ids',
 			'post_name__in' => array(self::ACTION),
-			'post_status'   => array(
+			'post_status' => array(
                 'request-pending',
                 'request-confirmed',
             ),
@@ -262,10 +349,8 @@ class LDC_AIO_Confirm_User_Email {
 
 	static private function tmp($user_id = 0){
 		$user = self::get_user($user_id);
+		$message = '<strong>' . __('Warning:') . '</strong> ' . sprintf(__(LDC_AIO_One::get_setting('confirm_user_email_alert')), '<code>' . esc_html($user->user_email) . '</code>');
 		if(self::incompleted_user_requests($user)){
-			$message = '<strong>' . __('Warning:') . '</strong> ' . sprintf(__('Your email address has not been updated yet. Please check your inbox at %s for a confirmation email.'), '<code>' . esc_html($user->user_email) . '</code>');
-			$message = str_replace('updated', 'confirmed', $message); // en fix
-			$message = str_replace('actualizado', 'confirmado', $message); // es fix
 			return new WP_Error(self::PREFIX . 'pending', $message, 'message');
 		} else {
 			$redirect_to = '';
@@ -280,7 +365,6 @@ class LDC_AIO_Confirm_User_Email {
 			if(is_wp_error($result)){
 				return $result;
 			}
-			$message = '<strong>' . __('Warning:') . '</strong> Confirma tu dirección de correo electrónico. ' . __('Check your email for the confirmation link.');
 			return new WP_Error(self::PREFIX . 'pending', $message, 'message');
 		}
 	}

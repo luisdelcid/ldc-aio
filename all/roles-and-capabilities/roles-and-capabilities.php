@@ -131,7 +131,7 @@ class LDC_AIO_Roles_and_Capabilities {
         ), $meta_box_and_tab);
         if(LDC_AIO_One::get_setting('hide_site')){
             add_action('template_redirect', function(){
-				if(!current_user_can(LDC_AIO_One::get_setting('hide_site'))){
+				if(!current_user_can(LDC_AIO_One::get_setting('hide_site_capability'))){
                     if(!in_array(get_the_ID(), LDC_AIO_One::get_setting('hide_site_excluded'))){
                         auth_redirect();
                     }
